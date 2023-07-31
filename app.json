@@ -16,32 +16,32 @@
       "index",
       "inline"
     ],
-    "website": "https://github.com/iwhiwh/aaaaaaaaaa",
-    "repository": "https://github.com/iwhiwh/aaaaaaaaaa",
+    "website": "https://github.com/Apnamovi/TopRepo",
+    "repository": "https://github.com/Apnamovi/TopRepo",
     "env": {
         "BOT_TOKEN": {
             "description": "Your bot token.",
-"value":"6027834135:AAHqW7KmTaOiKW7zq67LRkohYmHHNTBehRw",
+"value":"6270657520:AAG8HnQesUcsV7mjqolRT9hJex1dZKI4WNg",
             "required": true
         },
         "API_ID": {
             "description": "Get this value from https://my.telegram.org",
-"value":"24579842",
+"value":"26461352",
             "required": true
         },
         "API_HASH": {
             "description": "Get this value from https://my.telegram.org",
-"value":"ec6105bf1a02c98f837300546dc341d1",
+"value":"ab9cc32776ada8335852b50cd96bb8c6",
             "required": true
         },
         "CHANNELS": {
             "description": "Username or ID of channel or group. Separate multiple IDs by space.",
-"value":"-1001867538832",
+"value":"-1001946764456",
             "required": false
         },
         "ADMINS": {
             "description": "Username or ID of Admin. Separate multiple Admins by space.",
-"value":"1991522624",
+"value":"5554564210",
             "required": true
         },
         "PICS": {
@@ -51,7 +51,7 @@
         },
         "LOG_CHANNEL": {
             "description": "Bot Logs,Give a channel id with -100xxxxxxx",
-"value":"-1001912840788",
+"value":"-1001433302422",
             "required": true
         },
         "AUTH_USERS": {
@@ -64,7 +64,6 @@
         },
         "DATABASE_URI": {
             "description": "mongoDB URI. Get this value from https://www.mongodb.com. For more help watch this video - https://youtu.be/dsuTn4qV2GA",
-"value":"mongodb+srv://happythehour:skumar(2006)@cluster0.wttyshn.mongodb.net/?retryWrites=true&w=majority",
             "required": true
         },
         "DATABASE_NAME": {
