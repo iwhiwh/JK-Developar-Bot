@@ -48,21 +48,13 @@ async def start(client, message):
         ]]
 
         reply_markup = InlineKeyboardMarkup(buttons)
-
-        m=await message.reply_sticker("CAACAgQAAxkBAALaCGPCykWHn6aiYCiHFkoJlNI3qDCXAALiCAACP6HpU_eQ4rIUrOiCHgQ") 
-
+        m=await message.reply_sticker("CAACAgIAAxkBAAEC9YlkvyPc-ydLXplvQREt7AABU7ihFZ8AAjEAA8GcYAzGDjKgi1p1pR4E") 
         await asyncio.sleep(1)
-
         await m.delete()        
-
         await message.reply_photo(
-
             photo=random.choice(PICS),
-
             caption=script.SUR_TXT.format(message.from_user.mention, temp.U_NAME, temp.B_NAME),
-
             reply_markup=reply_markup,
-
             parse_mode=enums.ParseMode.HTML
         )
         return
@@ -250,7 +242,7 @@ async def start(client, message):
                 )
             filetype = msg.media
             file = getattr(msg, filetype)
-            title = file.file_name
+            title = ' ' + ' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('@'), file.file_name.split()))
             size=get_size(file.file_size)
             f_caption = f"<code>{title}</code>"
             if CUSTOM_FILE_CAPTION:
@@ -264,7 +256,7 @@ async def start(client, message):
             pass
         return await message.reply('No such file exist.')
     files = files_[0]
-    title = files.file_name
+    title = ' ' + ' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('@'), files.file_name.split()))
     size=get_size(files.file_size)
     f_caption=files.caption
     if CUSTOM_FILE_CAPTION:
@@ -274,7 +266,7 @@ async def start(client, message):
             logger.exception(e)
             f_caption=f_caption
     if f_caption is None:
-        f_caption = f"{files.file_name}"
+        f_caption = f" {' '.join(filter(lambda x: not x.startswith('[') and not x.startswith('@'), files1.file_name.split()))}""
     if not await check_verification(client, message.from_user.id) and VERIFY == True:
         btn = [[
                     InlineKeyboardButton("♻️ ᴄʟɪᴄᴋ ᴛᴏ ᴠᴇʀɪғʏ ♻️", url=await get_token(client, message.from_user.id, f"https://telegram.me/{temp.U_NAME}?start=")),
