@@ -18,8 +18,8 @@ class script(object):
  🥶 ʙᴜɪʟᴅ sᴛᴀᴛᴜs : ᴠ3.0 [sᴛᴀʙʟᴇ​]</b>"""
 
     SOURCE_TXT = """<b>NOTE:</b>
-<b>- ɢᴀᴀɴᴅ ᴍᴀʀᴀᴏ ʙsᴅᴋ 😝
-- 𝚂𝙾𝚄𝚁𝙲𝙴 - <a href=https://t.me/jk1boss>ɴʜɪ ᴅᴜɴɢᴀ ʙsᴅᴋ 🤪</a>"""
+<b>- Tʜɪꜱ Sᴏᴜʀᴄᴇ Cᴏᴅᴇ Pʀɪᴠᴀᴛᴇ Cᴏɴᴛᴀᴄᴛ Oᴡɴᴇʀ😝
+- 𝚂𝙾𝚄𝚁𝙲𝙴 - <a href=https://t.me/jk1boss>Oᴡɴᴇʀ</a>"""
 
 
 
