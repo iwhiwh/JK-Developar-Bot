@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://graph.org/file/a66a4ad88fd5944c45145.jpg" alt="Elsa">
+  <img src="https://telegra.ph/file/5e0d121c04318ce13a234.jpg" alt="Elsa">
 </p>
 <h1 align="center">
   <b>Caliopy</b>
