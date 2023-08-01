@@ -25,6 +25,7 @@ from database.filters_mdb import (
 from database.gfilters_mdb import (
     find_gfilter,
     get_gfilters,
+    del_allg
 )
 import logging
 
@@ -35,27 +36,28 @@ BUTTONS = {}
 SPELL_CHECK = {}
 FILTER_MODE = {}
 
-@Client.on_message(filters.command('autofilter'))
-async def fil_mod(client, message): 
-      mode_on = ["yes", "on", "true"]
-      mode_of = ["no", "off", "false"]
-
-      try: 
-         args = message.text.split(None, 1)[1].lower() 
-      except: 
-         return await message.reply("**𝙸𝙽𝙲𝙾𝙼𝙿𝙴𝚃𝙴𝙽𝚃 𝙲𝙾𝙼𝙼𝙰𝙳...**")
-      
-      m = await message.reply("**𝚂𝙴𝚃𝚃𝙸𝙽𝙶.../**")
-
-      if args in mode_on:
-          FILTER_MODE[str(message.chat.id)] = "True" 
-          await m.edit("**𝙰𝚄𝚃𝙾𝙵𝙸𝙻𝚃𝙴𝚁 𝙴𝙽𝙰𝙱𝙻𝙴𝙳**")
-      
-      elif args in mode_of:
-          FILTER_MODE[str(message.chat.id)] = "False"
-          await m.edit("**𝙰𝚄𝚃𝙾𝙵𝙸𝙻𝚃𝙴𝚁 𝙳𝙸𝚂𝙰𝙱𝙻𝙴𝙳**")
-      else:
-          await m.edit("𝚄𝚂𝙴 :- /autofilter on 𝙾𝚁 /autofilter off")
+@Client.on_message(filters.group | filters.private & filters.text & filters.incoming)
+async def give_filter(client, message):
+    if message.chat.id != SUPPORT_CHAT_ID:
+        manual = await manual_filters(client, message)
+        if manual == False:
+            settings = await get_settings(message.chat.id)
+            try:
+                if settings['auto_ffilter']:
+                    await auto_filter(client, message)
+            except KeyError:
+                grpid = await active_connection(str(message.from_user.id))
+                await save_group_settings(grpid, 'auto_ffilter', True)
+                settings = await get_settings(message.chat.id)
+                if settings['auto_ffilter']:
+                    await auto_filter(client, message) 
+    else: #a better logic to avoid repeated lines of code in auto_filter function
+        search = message.text
+        temp_files, temp_offset, total_results = await get_search_results(chat_id=message.chat.id, query=search.lower(), offset=0, filter=True)
+        if total_results == 0:
+            return
+        else:
+            return await message.reply_text(f"<b>Hᴇʏ {message.from_user.mention}, {str(total_results)} ʀᴇsᴜʟᴛs ᴀʀᴇ ғᴏᴜɴᴅ ɪɴ ᴍʏ ᴅᴀᴛᴀʙᴀsᴇ ғᴏʀ ʏᴏᴜʀ ᴏ̨ᴜᴇʀʏ {search}. \n\nTʜɪs ɪs ᴀ sᴜᴘᴘᴏʀᴛ ɢʀᴏᴜᴘ sᴏ ᴛʜᴀᴛ ʏᴏᴜ ᴄᴀɴ'ᴛ ɢᴇᴛ ғɪʟᴇs ғʀᴏᴍ ʜᴇʀᴇ...\n\nJᴏɪɴ ᴀɴᴅ Sᴇᴀʀᴄʜ Hᴇʀᴇ -@New_Moviee_hindi</b>")
 
 @Client.on_message(filters.private & filters.text & filters.incoming)
 async def pm_text(bot, message):
@@ -72,48 +74,6 @@ async def pm_text(bot, message):
         chat_id=LOG_CHANNEL,
         text=f"<b>#𝐏𝐌_𝐌𝐒𝐆\n\nNᴀᴍᴇ : {user}\n\nID : {user_id}\n\nMᴇssᴀɢᴇ : {content}</b>"
     )
-keywords = await get_filters(group_id)
-    for keyword in reversed(sorted(keywords, key=len)):
-        pattern = r"( |^|[^\w])" + re.escape(keyword) + r"( |$|[^\w])"
-        if re.search(pattern, name, flags=re.IGNORECASE):
-            reply_text, btn, alert, fileid = await find_filter(group_id, keyword)
-
-            if reply_text:
-                reply_text = reply_text.replace("\\n", "\n").replace("\\t", "\t")
-
-            if btn is not None:
-                try:
-                    if fileid == "None":
-                        if btn == "[]":
-                            await message.reply_text(reply_text, disable_web_page_preview=True)
-                        else:
-                            button = eval(btn)
-                            await message.reply_text(
-                                reply_text,
-                                disable_web_page_preview=True,
-                                reply_markup=InlineKeyboardMarkup(button)
-                            )
-                    elif btn == "[]":
-                        await message.reply_cached_media(
-                            fileid,
-                            caption=reply_text or ""
-                        )
-                    else:
-                        button = eval(btn) 
-                        await message.reply_cached_media(
-                            fileid,
-                            caption=reply_text or "",
-                            reply_markup=InlineKeyboardMarkup(button)
-                        )
-                except Exception as e:
-                    print(e)
-                break 
-
-    else:
-        if FILTER_MODE.get(str(message.chat.id)) == "False":
-            return
-        else:
-            await auto_filter(client, message)
 
 @Client.on_callback_query(filters.regex(r"^next"))
 async def next_page(bot, query):
