@@ -14,11 +14,12 @@ aiofiles
 ffmpeg-python
 ffmpeg
 youtube_search
-youtube_search_python
+youtube-search-python==1.4.6
 yt-dlp
 youtube-dl
 youtube_search
 requests
+aiohttp==3.7.4
 gTTS
 googletrans==3.1.0a0
 telegraph
@@ -29,7 +30,6 @@ countryinfo
 datetime
 pytz
 dnspython==2.3.0
-aiohttp<=3.11.2
 python-math
 Pillow
 speedtest-cli
